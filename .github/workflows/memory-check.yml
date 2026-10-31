@@ -1,0 +1,29 @@
+name: memory-check
+
+on:
+  push:
+    paths:
+      - "memory/**"
+      - "setup/**"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 文件非空
+        run: |
+          fail=0
+          for f in $(git ls-files 'memory/**.md' 'setup/**.md'); do
+            [ -s "$f" ] || { echo "空文件: $f"; fail=1; }
+          done
+          exit $fail
+      - name: 日记标题带结论（2026-10-31 起）
+        run: |
+          awk '/^## /{ d=substr($0,4,10); if (d >= "2026-10-31" && $0 !~ /—/) { print "缺结论: " $0; fail=1 } } END{ exit fail }' memory/LOG.md
+      - name: 疑似密钥
+        run: |
+          if git grep -nE '(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|AKIA[A-Z0-9]{16}|BEGIN (RSA|OPENSSH) PRIVATE KEY)' -- 'memory/**' 'setup/**'; then
+            echo "发现疑似密钥"; exit 1
+          fi

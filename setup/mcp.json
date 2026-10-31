@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "Memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {
+        "MEMORY_FILE_PATH": "/workspace/memory.json"
+      }
+    },
+    "Knowledge Graph Memory": {
+      "command": "npx",
+      "args": ["-y", "@itseasy21/mcp-knowledge-graph"],
+      "env": {
+        "MEMORY_FILE_PATH": "/workspace/kg-memory.json"
+      }
+    }
+  }
+}

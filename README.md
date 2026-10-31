@@ -1,1 +1,29 @@
-# memory-template-
+# 记忆模板
+
+跨会话记忆的可搬运结构：规则、场景文件、日记、技能、提示词。
+
+## 结构
+
+```
+memory/            记忆本体
+  INDEX.md         唯一入口（每次必读）
+  LOG.md           情景日记（按标题检索）
+  HITS.md          命中记录
+  PORTABLE.md      导出给别家模型
+  profile/         ai（语气边界）user（画像）behavior（行为记录）
+  knowledge/       交付、设计、平台、运维、写作、关系、MCP 灌入
+setup/             搬运包：prompt.md、mcp.json、三个技能
+```
+
+## 上手
+
+1. 建一个私有仓库，把 `memory/` 与 `setup/` 拷进去
+2. 改 `setup/prompt.md` 第一行的仓库地址
+3. 把 `setup/prompt.md` 的代码块粘到站点「规则」，或直接发给任意模型
+4. 新开会话，让它先读 `memory/INDEX.md`
+
+## 三条原则
+
+- **好的留下，坏的标作废**（不删除，原文保留）
+- **同一主题以日期最新为准**
+- **不确定就说不确定**；推断标「（推断）」，不写进长期结论
