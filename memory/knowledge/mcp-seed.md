@@ -8,11 +8,12 @@
 - 需要图谱型 MCP（实体/关系），数据路径见 `platform.md`
 - 幂等：`kg_json` 已存在且非空就跳过，不重复建
 
-## 实体（11）
+## 实体（13）
 
 | 名称 | 类型 | 一句话 |
 |---|---|---|
 | INDEX.md | file | 每次会话唯一入口 |
+| HITS.md | file | 命中记录，清点时用 |
 | LOG.md | file | 情景日记，按标题检索 |
 | PORTABLE.md | file | 导出给别家模型 |
 | profile/ai.md | file | 语气与边界，每次必读 |
@@ -23,6 +24,7 @@
 | knowledge/platform.md | file | 平台、时间源、MCP 路径 |
 | knowledge/memory-ops.md | file | 写入口径与条目格式 |
 | knowledge/mcp-seed.md | file | 本清单 |
+| knowledge/writing.md | file | 日记怎么写 |
 
 ## 关系
 
@@ -31,8 +33,8 @@
 ## 执行
 
 1. `search_nodes("INDEX")` 自检；已有实体就直接停
-2. `create_entities` 写入 13 条，observation 用键值：`事实` `时` `状态`
-3. `create_relations` 写入 8 条
+2. `create_entities` 写入本文件「实体」表的全部行（不照抄数字，表有几行就写几行），observation 用键值：`事实` `时` `状态`
+3. `create_relations` 按 `relations.md` 实际条数写入，不照抄任何固定数字
 4. `grep` 一次验证能命中，能命中就算完成
 
 ## 不做
