@@ -22,6 +22,17 @@ jobs:
       - name: 日记标题带结论（2026-10-31 起）
         run: |
           awk '/^## /{ d=substr($0,4,10); if (d >= "2026-10-31" && $0 !~ /—/) { print "缺结论: " $0; fail=1 } } END{ exit fail }' memory/LOG.md
+      - name: 日记正文至少三句（2026-10-31 起）
+        run: |
+          awk '
+            /^## /{
+              if (started && d >= "2026-10-31" && n < 3) { print "正文不足三句: " title; fail=1 }
+              title=$0; d=substr($0,4,10); n=0; started=1; next
+            }
+            /^[^[:space:]]/{ if (started) n++ }
+            END{ if (started && d >= "2026-10-31" && n < 3) { print "正文不足三句: " title; fail=1 } exit fail }
+          ' memory/LOG.md
+
       - name: 疑似密钥
         run: |
           if git grep -nE '(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}|AKIA[A-Z0-9]{16}|BEGIN (RSA|OPENSSH) PRIVATE KEY)' -- 'memory/**' 'setup/**'; then
